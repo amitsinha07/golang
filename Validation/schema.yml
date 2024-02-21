@@ -1,0 +1,116 @@
+# request_schema.yml
+
+$schema: http://json-schema.org/draft-07/schema#
+type: object
+properties:
+  context:
+    type: object
+    properties:
+      domain:
+        type: string
+        minLength:  1
+      action:
+        type: string
+        minLength:  1
+      country:
+        type: string
+        minLength:  1
+      city:
+        type: string
+        minLength:  1
+      core_version:
+        type: string
+        minLength:  1
+      bap_id:
+        type: string
+        minLength:  1
+      bap_uri:
+        type: string
+        minLength:  1
+      transaction_id:
+        type: string
+        minLength:  1
+      message_id:
+        type: string
+        minLength:  1
+      timestamp:
+        type: string
+        format: date-time
+        minLength:  1
+      ttl:
+        type: string
+        pattern: ^PT[0-9]+[SMHD]$
+        minLength:  1
+    required:
+      - domain
+      - action
+      - country
+      - city
+      - core_version
+      - bap_id
+      - bap_uri
+      - transaction_id
+      - message_id
+      - timestamp
+      - ttl
+  message:
+    type: object
+    properties:
+      intent:
+        type: object
+        properties:
+          category:
+            type: object
+            properties:
+              id:
+                type: string
+                minLength:  1
+            required:
+              - id
+          fulfillment:
+            type: object
+            properties:
+              type:
+                type: string
+                minLength:  1
+            required:
+              - type
+          payment:
+            type: object
+            properties:
+              '@ondc/org/buyer_app_finder_fee_type':
+                type: string
+                minLength:  1
+              '@ondc/org/buyer_app_finder_fee_amount':
+                type: string
+                minLength:  1
+            required:
+              - '@ondc/org/buyer_app_finder_fee_type'
+              - '@ondc/org/buyer_app_finder_fee_amount'
+          tags:
+            type: array
+            items:
+              type: object
+              properties:
+                code:
+                  type: string
+                  minLength:  1
+                list:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      code:
+                        type: string
+                        minLength:  1
+                      value:
+                        type: string
+                        minLength:  1
+                    required:
+                      - code
+                      - value
+              required:
+                - code
+                - list
+    required:
+      - intent

@@ -1,3 +1,6 @@
 go 1.22.0
 
-use ./blogApp
+use (
+	./Validation
+	./blogApp
+)
