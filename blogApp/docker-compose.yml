@@ -10,12 +10,23 @@ services:
       - .env
     depends_on:
       - mongodb
+    networks:
+      - blog-app-network
 
   mongodb:
-    image: mongo
+    image: mongo:latest
     container_name: mongodb
+    restart: always
     ports:
-      - "27017:27017"
-    environment:
-      DB_URL: ${DB_URL}
-      DB_NAME: ${DB_URL}
+      - "27018:27017"
+    volumes:
+      - mongodb-data:/data/db
+    networks:
+      - blog-app-network
+
+networks:
+  blog-app-network:
+    driver: bridge
+
+volumes:
+  mongodb-data:

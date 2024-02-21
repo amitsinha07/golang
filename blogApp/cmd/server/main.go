@@ -28,8 +28,16 @@ func main() {
 
 	// Routes
 	router := mux.NewRouter()
+
+	// user apis
 	router.HandleFunc("/signup", handler.SingnUp(db)).Methods("POST")
 	router.HandleFunc("/{users}", handler.GetUsers(db)).Methods("GET")
+
+	// Post Apis
+	router.HandleFunc("/", handler.GetPosts(db)).Methods("GET")
+	router.HandleFunc("/post", handler.CreatePost(db)).Methods("POST")
+	router.HandleFunc("/post/{postid}", handler.UpdatePost(db)).Methods("PUT")
+	router.HandleFunc("/post/{postid}", handler.DeletePost(db)).Methods("DELETE")
 
 	fmt.Println("Server is running at port 9000")
 	http.ListenAndServe(":9000", router)
